@@ -5,56 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Efficient Audio Loop Example</title>
     <style>
-      body{
-        background-color: rgb(0,0,0);
+      body {
+        background-color: rgb(0, 0, 0);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
       }
     </style>
 </head>
 <body>
-  
-  
-  
-  
-  
-  
+    <button id="startButton">Start Audio Loop</button>
+
     <script>
         // Array of sample audio file names
-  const speeches = [];
-  speeches[0] = 'aaa.mp3'
-  speeches[1] = 'bbb.mp3'
-  speeches[2] = 'ccc.mp3'
+        const speeches = ['aaa.mp3', 'bbb.mp3', 'ccc.mp3'];
+        let played = [];
 
-let played = []
-
-//randomly select an item from an array
-function randomfrom(array) {
-  let item
-  do{
-   item = array[parseInt(Math.random() * array.length)];
-  } while (played.includes(item))
-  played.push(item)
-  if(played.length == speeches.length) played = []
-  return item
-}
+        // Function to randomly select an item from an array
+        function randomfrom(array) {
+            let item;
+            do {
+                item = array[parseInt(Math.random() * array.length)];
+            } while (played.includes(item))
+            played.push(item);
+            if (played.length === speeches.length) played = [];
+            return item;
+        }
 
         // Single reusable Audio object
         let audio = new Audio();
 
         // Function to play a random audio file
-   function playRandomAudio() {
-      audio.src = 'sonidos mp3/' + randomfrom(speeches);
-      audio.currentTime = 0;
-      audio.play();
-      console.log('Playing:', audio.src);
-    }
+        function playRandomAudio() {
+            audio.src = 'sonidos mp3/' + randomfrom(speeches);
+            audio.currentTime = 0;
+            audio.play();
+            console.log('Playing:', audio.src);
+        }
 
         // Event listener for when the audio ends
         audio.onended = function () {
             playRandomAudio();
         };
 
-        // Start the loop by playing the first random audio
-   document.body.onclick = playRandomAudio;
+        // Start the loop when the button is clicked
+        document.getElementById('startButton').onclick = function() {
+            playRandomAudio();
+        };
     </script>
 </body>
 </html>
