@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efficient Audio Loop Example</title>
+    <style>
+      body{
+        background-color: rgb(0,0,0);
+      }
+    </style>
+</head>
+<body>
+  
+  
+  
+  
+  
+  
+    <script>
+        // Array of sample audio file names
+  const speeches = [];
+  speeches[0] = 'aaa.mp3'
+  speeches[1] = 'bbb.mp3'
+  speeches[2] = 'ccc.mp3'
+
+let played = []
+
+//randomly select an item from an array
+function randomfrom(array) {
+  let item
+  do{
+   item = array[parseInt(Math.random() * array.length)];
+  } while (played.includes(item))
+  played.push(item)
+  if(played.length == speeches.length) played = []
+  return item
+}
+
+        // Single reusable Audio object
+        let audio = new Audio();
+
+        // Function to play a random audio file
+   function playRandomAudio() {
+      audio.src = 'sonidos mp3/' + randomfrom(speeches);
+      audio.currentTime = 0;
+      audio.play();
+      console.log('Playing:', audio.src);
+    }
+
+        // Event listener for when the audio ends
+        audio.onended = function () {
+            playRandomAudio();
+        };
+
+        // Start the loop by playing the first random audio
+        playRandomAudio();
+    </script>
+</body>
+</html>
